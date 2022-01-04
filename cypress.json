@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://gin.test",
+    "baseUrl": "https://thunder-demo.herokuapp.com/",
     "video": false,
     "viewportWidth": 1280,
     "viewportHeight": 800
