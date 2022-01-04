@@ -14,22 +14,22 @@ env:
 jobs:
   chrome:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
+    container: cypress/browsers:node16.5.0-chrome94-ff93
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      # - name: Download the build folders
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: build
-      #     path: build
-
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          # Specify Browser since container image is compile with Firefox
           browser: chrome
-          start: exit 0
+
+  firefox:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.5.0-chrome94-ff93
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: firefox
