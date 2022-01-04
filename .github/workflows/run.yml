@@ -32,5 +32,4 @@ jobs:
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
-          build: yarn build
-
+          start: exit 0
