@@ -25,22 +25,41 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
-addMatchImageSnapshotCommand();
+addMatchImageSnapshotCommand({
+    capture: 'fullPage',
+    customDiffConfig: { threshold: 0.0 },
+    failureThreshold: 0.00,
+    failureThresholdType: 'percent',
+});
 
-Cypress.Commands.add("login", (user, password) => {
-    return cy.request({
-      method: 'POST',
-      url: '/user/login', 
-      form: true,
-      body: { 
-        name: user,
-        pass: password,
-        form_id: 'user_login_form' 
-      }
+Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
+    const options = typeof maybeName === 'string' ? maybeOptions : maybeName;
+    const name = typeof maybeName === 'string' ? maybeName : null;
+    const taskTitle = cy.state('runnable').fullTitle();
+    const browserName = Cypress.config('browser').name;
+    const viewportWidth = Cypress.config('viewportWidth');
+
+    let snapshotTitle = `${taskTitle}-${browserName}-${viewportWidth}`;
+    if (name) {
+        snapshotTitle = `${snapshotTitle}-${maybeName}`;
+    }
+
+    cy.sanitizeTitle(snapshotTitle).then((title) => {
+        cy.matchImageSnapshot(title, options);        
     });
-  });
-  
-  Cypress.Commands.add('logout', () => {
-    return cy.request('/user/logout');
-  });
-  // ...
+});
+
+Cypress.Commands.add('setResolution', (size) => {
+    if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1]);
+     } else {
+         cy.viewport(size);
+    }
+});
+
+Cypress.Commands.add('sanitizeTitle', (string) => {
+    return string
+        .replace(/[^a-z0-9_-]/gi, '_')
+        .replace(/^_/, '')
+        .toLowerCase();
+});
