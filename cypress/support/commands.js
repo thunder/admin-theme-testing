@@ -26,7 +26,7 @@
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
 addMatchImageSnapshotCommand({
-    capture: 'fullPage',
+    capture: 'viewport',
     customDiffConfig: { threshold: 0.0 },
     failureThreshold: 0.00,
     failureThresholdType: 'percent',
@@ -44,8 +44,13 @@ Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
         snapshotTitle = `${snapshotTitle}-${maybeName}`;
     }
 
+    cy.window().then((win) => {
+        const height = win.document.documentElement.scrollHeight;
+        cy.viewport(1280, height);
+    });
+
     cy.sanitizeTitle(snapshotTitle).then((title) => {
-        cy.matchImageSnapshot(title, options);        
+        cy.matchImageSnapshot(title, options);
     });
 });
 
