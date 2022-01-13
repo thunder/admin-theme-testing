@@ -13,8 +13,8 @@ env:
 
 jobs:
   visual:
-    runs-on: ubuntu-latest
-    container: cypress/included:9.2.0
+    runs-on: ubuntu-20.04
+    # container: cypress/included:9.2.0
     # cypress/browsers:node16.5.0-chrome94-ff93
 
     strategy:
@@ -32,4 +32,4 @@ jobs:
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
       - name: Cypress run
-        run: cypress run --browser ${{matrix.browser}}
+        run: docker run -it -v $PWD:/e2e -w /e2e cypress/included:9.2.0  --spec cypress/integration/test.spec.js --browser ${{matrix.browser}}
