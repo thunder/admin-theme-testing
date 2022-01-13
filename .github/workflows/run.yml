@@ -26,4 +26,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cypress run
-        run: cypress run --browser ${matrix.browser}
+        run: cypress run --browser ${{matrix.browser}}
