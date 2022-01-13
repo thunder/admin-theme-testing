@@ -25,5 +25,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install dependencies 📦
+        uses: bahmutov/npm-install@v1
       - name: Cypress run
         run: cypress run --browser ${{matrix.browser}}
