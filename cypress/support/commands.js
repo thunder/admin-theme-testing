@@ -46,7 +46,6 @@ Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
 
     cy.window().then((win) => {
         const height = win.document.documentElement.scrollHeight;
-        cy.log(height);
         cy.viewport(1280, height);
     });
 
