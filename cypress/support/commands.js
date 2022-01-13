@@ -46,20 +46,13 @@ Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
 
     cy.window().then((win) => {
         const height = win.document.documentElement.scrollHeight;
+        cy.log(height);
         cy.viewport(1280, height);
     });
 
     cy.sanitizeTitle(snapshotTitle).then((title) => {
         cy.matchImageSnapshot(title, options);
     });
-});
-
-Cypress.Commands.add('setResolution', (size) => {
-    if (Cypress._.isArray(size)) {
-        cy.viewport(size[0], size[1]);
-     } else {
-         cy.viewport(size);
-    }
 });
 
 Cypress.Commands.add('sanitizeTitle', (string) => {
