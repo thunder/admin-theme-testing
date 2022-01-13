@@ -28,7 +28,7 @@ jobs:
       - name: Enable LFS
         run: |
           echo "screenshots/reference/** filter=lfs diff=lfs merge=lfs -text" >.gitattributes
-          git-lfs pull
+          git lfs pull
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
       - name: Cypress run
