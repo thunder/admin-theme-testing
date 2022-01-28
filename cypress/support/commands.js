@@ -33,8 +33,8 @@ addMatchImageSnapshotCommand({
 });
 
 Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
-    const options = typeof maybeName === 'string' ? maybeOptions : maybeName;
     const name = typeof maybeName === 'string' ? maybeName : null;
+    let options = typeof maybeName === 'string' ? maybeOptions : maybeName;
     const taskTitle = cy.state('runnable').fullTitle();
     const browserName = Cypress.config('browser').name;
     const viewportWidth = Cypress.config('viewportWidth');
@@ -44,10 +44,22 @@ Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
         snapshotTitle = `${snapshotTitle}-${maybeName}`;
     }
 
-    cy.window().then((win) => {
-        const height = win.document.documentElement.scrollHeight;
-        cy.viewport(1280, height);
-    });
+    if (options) {
+        if (options.resizeViewport) {
+            cy.window().then((win) => {
+                const height = win.document.documentElement.scrollHeight;
+                cy.viewport(1280, height);
+            });
+        }
+        if (options.fullPage) {
+            cy.get('body').invoke('css', 'filter', 'blur(0)');
+
+            options = {
+                capture: 'fullPage',
+                ...options
+            };
+        };
+    }
 
     cy.sanitizeTitle(snapshotTitle).then((title) => {
         cy.matchImageSnapshot(title, options);
