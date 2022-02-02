@@ -33,3 +33,10 @@ jobs:
         uses: bahmutov/npm-install@v1
       - name: Cypress run
         run: docker run -v $PWD:/e2e -w /e2e cypress/included:9.2.0  --spec cypress/integration/*.spec.js --browser ${{matrix.browser}}
+      
+      - name: Upload images artifact
+        if: failure()
+        uses: actions/upload-artifact@v1
+        with:
+          name: images-${{matrix.browser}}
+          path: $PWD/cypress/screenshots
