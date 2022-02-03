@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
       - name: Cypress run
-        run: docker run -v $PWD:/e2e -w /e2e cypress/included:9.2.1  --spec cypress/integration/*.spec.js --browser ${{matrix.browser}}
+        run: docker run -v $PWD:/e2e -w /e2e cypress/included:9.2.1 --env-file <(env | grep CYPRESS) --spec cypress/integration/*.spec.js --browser ${{matrix.browser}}
         env:
           CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
       - name: Upload images artifact
