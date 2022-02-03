@@ -10,6 +10,7 @@ on:
 
 env:
   THUNDER_ADMIN_TESTS_BRANCH: 'master'
+  CYPRESS_HOST: 'foo.bar'
 
 jobs:
   visual:
