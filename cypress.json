@@ -1,5 +1,4 @@
 {
-    "baseUrl": "https://thunder-morpho.herokuapp.com",
     "video": false,
     "viewportWidth": 1280,
     "viewportHeight": 800
