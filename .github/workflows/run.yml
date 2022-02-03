@@ -10,7 +10,6 @@ on:
 
 env:
   THUNDER_ADMIN_TESTS_BRANCH: 'master'
-  CYPRESS_HOST: 'foo.bar'
 
 jobs:
   visual:
@@ -34,7 +33,8 @@ jobs:
         uses: bahmutov/npm-install@v1
       - name: Cypress run
         run: docker run -v $PWD:/e2e -w /e2e cypress/included:9.2.1  --spec cypress/integration/*.spec.js --browser ${{matrix.browser}}
-      
+        env:
+          CYPRESS_HOST: 'foo.bar'
       - name: Upload images artifact
         if: failure()
         uses: actions/upload-artifact@v1
