@@ -8,7 +8,8 @@ After that following line should be executed to get all existing screenshots fro
 
 Every following `git` pull/push should work properly with LFS integration, as long `.gitattributes` is in local repository.
 
+Update reference images on local environment.
 
-```docker run -it -v $PWD:/e2e -w /e2e cypress/included:9.2.0  --browser chrome --spec cypress/integration/test.spec.js --env updateSnapshots=true```
+```docker run -it -v $PWD:/e2e -w /e2e cypress/included:9.2.1 --spec cypress/integration/*.spec.js --browser chrome --env updateSnapshots=true```
 
-```docker run -it -v $PWD:/e2e -w /e2e cypress/included:9.2.0  --browser firefox --spec cypress/integration/test.spec.js --env updateSnapshots=true```
+```docker run -it -v $PWD:/e2e -w /e2e cypress/included:9.2.1 --spec cypress/integration/*.spec.js --browser firefox --env updateSnapshots=true```
