@@ -34,7 +34,7 @@ jobs:
       - name: Cypress run
         run: docker run -v $PWD:/e2e -w /e2e cypress/included:9.2.1  --spec cypress/integration/*.spec.js --browser ${{matrix.browser}}
         env:
-          CYPRESS_HOST: 'foo.bar'
+          CYPRESS_BASE_URL: 'http://foo.bar'
       - name: Upload images artifact
         if: failure()
         uses: actions/upload-artifact@v1
