@@ -8,9 +8,6 @@ on:
   schedule:
     - cron:  '0 6 * * *'
 
-env:
-  THUNDER_ADMIN_TESTS_BRANCH: 'master'
-
 jobs:
   visual:
     runs-on: ubuntu-20.04
@@ -31,11 +28,11 @@ jobs:
           git lfs pull
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
-      - name: Cypress run
-        run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}}
-        env:
-          CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
-          updateSnapshots: false
+#      - name: Cypress run
+#        run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}}
+#        env:
+#          CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
+#          updateSnapshots: false
       - name: Upload images artifact
         if: failure()
         uses: actions/upload-artifact@v1
@@ -43,5 +40,5 @@ jobs:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
       - name: Check changes
-        if: failure()
+#        if: failure()
         run: git status
