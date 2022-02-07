@@ -22,7 +22,9 @@ jobs:
       updateSnapshots: false
 
     steps:
-      - name: Set the value
+      - name: Get commit message
+        run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+      - name: Set update screenshots
         if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
         run: |
           echo "updateSnapshots=true" >> $GITHUB_ENV
