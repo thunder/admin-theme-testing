@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
-          CONTEXT: ${{ github.event.head_commit.message }}
+          CONTEXT: ${{ steps.message.outputs.message }}
         run: echo "$GITHUB_CONTEXT"
       - name: Checkout
         uses: actions/checkout@v2
