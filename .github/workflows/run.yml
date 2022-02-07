@@ -19,7 +19,7 @@ jobs:
       matrix:
         browser: ['chrome', 'firefox']
     env:
-      updateSnapshots: ${{ github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS') }}
+      updateSnapshots: ${{ github.event_name == 'pull_request' && contains(github.event.head_commit.message, '[UPDATE_SCREENSHOTS') }}
 
     steps:
       - name: Checkout
