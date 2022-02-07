@@ -43,4 +43,5 @@ jobs:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
       - name: Check changes
+        if: failure()
         run: git status
