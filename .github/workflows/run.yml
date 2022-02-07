@@ -20,7 +20,7 @@ jobs:
         browser: ['chrome', 'firefox']
     env:
       updateSnapshots: ${{ github.event_name == 'pull_request' && contains(github.event.head_commit.message, '[UPDATE_SCREENSHOTS') }}
-
+      message: ${{github.event.head_commit.message}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
