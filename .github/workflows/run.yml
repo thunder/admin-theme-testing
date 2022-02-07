@@ -22,20 +22,20 @@ jobs:
       updateSnapshots: false
 
     steps:
-      - name: Get commit message
-        run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
-      - name: Set update screenshots
-        if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
-        run: |
-          echo "updateSnapshots=true" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
       - name: Enable LFS
         run: |
           echo "cypress/snapshots/** filter=lfs diff=lfs merge=lfs -text" >.gitattributes
           git lfs pull
-      - name: Install dependencies 📦
-        uses: bahmutov/npm-install@v1
+      - name: Get commit message
+        run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+      - name: Set update screenshots
+        if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
+        run: |
+          echo "updateSnapshots=true" >> $GITHUB_ENV
+#      - name: Install dependencies 📦
+#        uses: bahmutov/npm-install@v1
       - name: Cypress run
         run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}} -e updateSnapshots=${{ env.updateSnapshots }}
         env:
