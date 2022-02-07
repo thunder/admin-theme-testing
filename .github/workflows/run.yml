@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
       - name: Cypress run
-        run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser} -e updateSnapshots=true
+        run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}} -e updateSnapshots=true
         env:
           CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
 #          updateSnapshots: true
