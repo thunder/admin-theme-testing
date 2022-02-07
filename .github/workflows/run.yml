@@ -19,14 +19,13 @@ jobs:
       matrix:
         browser: ['chrome', 'firefox']
     env:
-      updateSnapshots: ${{ github.event_name == 'pull_request' && contains(github.event.head_commit.message, '[UPDATE_SCREENSHOTS') }}
-      message: ${{github.event.head_commit.message}}
+      updateSnapshots: false
 
     steps:
-      - name: Dump GitHub context
-        env:
-          CONTEXT: ${{ steps.message.outputs.message }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Set the value
+        if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
+        run: |
+          echo "updateSnapshots=true" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
       - name: Enable LFS
