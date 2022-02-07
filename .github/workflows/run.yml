@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
-          GITHUB_CONTEXT: ${{ toJson(jobs) }}
+          GITHUB_CONTEXT: ${{ toJson(job) }}
         run: echo "$GITHUB_CONTEXT"
       - name: Checkout
         uses: actions/checkout@v2
