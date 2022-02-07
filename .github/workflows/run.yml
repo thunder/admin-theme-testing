@@ -24,20 +24,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Enable LFS
+      - name : GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: get commit message
         run: |
-          echo "cypress/snapshots/** filter=lfs diff=lfs merge=lfs -text" >.gitattributes
-          git lfs pull
+           echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+      - name: show commit message
+        run : echo $commitmsg
+      
       - name: Get commit message
         id: message
         run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
       - name: Debug message
         run: echo '${{ toJSON(steps) }}'
-
       - name: Set update screenshots
         if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
         run: |
           echo "updateSnapshots=true" >> $GITHUB_ENV
+
+      - name: Enable LFS
+        run: |
+          echo "cypress/snapshots/** filter=lfs diff=lfs merge=lfs -text" >.gitattributes
+          git lfs pull
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
       - name: Cypress run
