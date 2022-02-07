@@ -32,7 +32,7 @@ jobs:
         run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}}
         env:
           CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
-          updateSnapshots: false
+          updateSnapshots: true
       - name: Upload images artifact
         if: failure()
         uses: actions/upload-artifact@v1
