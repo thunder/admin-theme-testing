@@ -42,3 +42,5 @@ jobs:
         with:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
+      - name: Check changes
+        run: git status
