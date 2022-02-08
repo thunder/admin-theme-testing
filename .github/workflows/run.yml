@@ -11,8 +11,6 @@ on:
 jobs:
   visual:
     runs-on: ubuntu-20.04
-    # container: cypress/included:9.2.0
-    # cypress/browsers:node16.5.0-chrome94-ff93
 
     strategy:
       fail-fast: false
@@ -27,18 +25,11 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name : GITHUB CONTEXT
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-#      - name: Setup tmate session
-#        uses: mxschmitt/action-tmate@v3
-#
       - name: Get commit message
         id: message
         run: echo "::set-output name=message::$(git log --no-merges -2 --oneline)"
-      - name: Debug message
+
+      - name: Set update snapshots
         if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
         run: |
           echo "updateSnapshots=true" >> $GITHUB_ENV
@@ -47,18 +38,18 @@ jobs:
         run: |
           echo "cypress/snapshots/** filter=lfs diff=lfs merge=lfs -text" >.gitattributes
           git lfs pull
+
       - name: Install dependencies 📦
         uses: bahmutov/npm-install@v1
+
       - name: Cypress run
         run: docker run --env-file <(env) -v $PWD:/e2e -w /e2e cypress/included:9.2.1 -s cypress/integration/*.spec.js -b ${{matrix.browser}} -e updateSnapshots=${{ env.updateSnapshots }}
         env:
           CYPRESS_BASE_URL: 'https://thunder-morpho.herokuapp.com'
+
       - name: Upload images artifact
         if: failure()
         uses: actions/upload-artifact@v1
         with:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
-      - name: Check changes
-        if: always()
-        run: git status
