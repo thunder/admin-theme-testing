@@ -1,0 +1,5 @@
+node_modules/
+cypress/videos
+cypress/results
+cypress/screenshots
+cypress/snapshots/*.spec.js/__diff_output__
