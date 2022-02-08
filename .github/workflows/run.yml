@@ -55,17 +55,17 @@ jobs:
           path: cypress/snapshots
 
       - name: Debug
-        if: failure() && github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
+        if: always() && github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
         uses: mxschmitt/action-tmate@v3
 
-      - name: Update screenshots
-        if: failure() && github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
-        run: update-screenshots.sh
-        env:
-          JOB_ID: ${{ github.run_id }}
-          SHARPEYE_BROWSER: ${{ matrix.SHARPEYE_BROWSER }}
-          BRANCH: ${{ github.head_ref }}
-          REPOSITORY: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.TechAccountToken }}
+#      - name: Update screenshots
+#        if: always() && github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
+#        run: update-screenshots.sh
+#        env:
+#          JOB_ID: ${{ github.run_id }}
+#          SHARPEYE_BROWSER: ${{ matrix.SHARPEYE_BROWSER }}
+#          BRANCH: ${{ github.head_ref }}
+#          REPOSITORY: ${{ github.repository }}
+#          GITHUB_TOKEN: ${{ secrets.TechAccountToken }}
 
 
