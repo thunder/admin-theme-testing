@@ -61,7 +61,6 @@ describe(theme, () => {
 
     it('Add mulitple paragraphs', () => {
         cy.visit('/node/add/article');
-        cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01');
         cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').contains('+ Text').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-0-subform"]').should('be.visible');
 
@@ -85,7 +84,10 @@ describe(theme, () => {
 
         cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').last().click();
         cy.get('.paragraphs-add-dialog.ui-dialog-content [name="field_paragraphs_video_add_more"]').click();
-        cy.compareSnapshot({ fullPage: true });
+
+        cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() =>{
+            cy.compareSnapshot({ fullPage: true });
+        });
     });
 
     it('Linkit dialog', () => {
@@ -112,6 +114,5 @@ describe(theme, () => {
         cy.get('[name="field_paragraphs_1_collapse"]').click();
         cy.compareSnapshot({ fullPage: true });
     });
-
 
 });
