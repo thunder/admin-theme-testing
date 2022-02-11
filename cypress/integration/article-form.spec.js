@@ -19,6 +19,7 @@ describe(theme, () => {
         .and(($img) => {
             expect($img[0].naturalHeight, 'Image loaded.').to.be.greaterThan(0);
         });
+        cy.scrollTo('bottom');
         cy.compareSnapshot({ fullPage: true });
     });
 
