@@ -15,10 +15,6 @@ describe(theme, () => {
         cy.visit('/admin/content');
         cy.get('#view-title-table-column a').click();
         cy.get('td.views-field.views-field-changed').invoke('html', '01/01/2018 - 00:00');
-        cy.get('td.views-field-field-teaser-media img').should('be.visible')
-        .and(($img) => {
-            expect($img[0].naturalHeight, 'Image loaded.').to.be.greaterThan(0);
-        });
         cy.scrollTo('bottom');
         cy.compareSnapshot({ fullPage: true });
     });
