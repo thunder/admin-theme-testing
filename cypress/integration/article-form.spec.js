@@ -85,8 +85,7 @@ describe(theme, () => {
 
         cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').last().click();
         cy.get('.paragraphs-add-dialog.ui-dialog-content [name="field_paragraphs_video_add_more"]').click();
-
-        cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() =>{
+        cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
             cy.compareSnapshot({ fullPage: true });
         });
     });
@@ -115,7 +114,6 @@ describe(theme, () => {
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"] .cke_button__bulletedlist').wait(200).click();
         cy.get('[name="field_paragraphs_1_collapse"]').click();
-
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
             cy.compareSnapshot({ fullPage: true });
         });
