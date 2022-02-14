@@ -54,10 +54,6 @@ jobs:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
 
-#      - name: Debug
-#        if: always() && github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
-#        uses: mxschmitt/action-tmate@v3
-
       - name: Update reference images
         if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
         uses: stefanzweifel/git-auto-commit-action@v4
