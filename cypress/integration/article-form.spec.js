@@ -114,6 +114,7 @@ describe(theme, () => {
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"] .cke_button__bulletedlist').wait(200).click();
         cy.get('[name="field_paragraphs_1_collapse"]').click();
+        cy.get('[data-drupal-selector="edit-field-paragraphs-1"] .paragraphs-icon-changed').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
             cy.compareSnapshot({ fullPage: true });
         });
