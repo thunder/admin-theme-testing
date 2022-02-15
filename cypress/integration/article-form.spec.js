@@ -99,7 +99,8 @@ describe(theme, () => {
         cy.get('.cke_button__drupallink').click();
         cy.get('[data-drupal-selector="edit-attributes-href"]').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
-            cy.compareSnapshot();
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(1000).compareSnapshot();
         });
     });
 
@@ -116,7 +117,8 @@ describe(theme, () => {
         cy.get('[name="field_paragraphs_1_collapse"]').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-1"] .paragraphs-icon-changed').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
-            cy.compareSnapshot({ fullPage: true });
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
+            cy.wait(1000).compareSnapshot({ fullPage: true });
         });
     });
 
