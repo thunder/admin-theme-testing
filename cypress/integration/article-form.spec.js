@@ -110,13 +110,11 @@ describe(theme, () => {
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01');
         cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').contains('+ Text').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-0-subform"]').should('be.visible');
-        cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').contains('+ Text').click();
-        cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"]').should('be.visible');
         // @todo https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
         // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"] .cke_button__bulletedlist').wait(1000).click();
-        cy.get('[name="field_paragraphs_1_collapse"]').click();
-        cy.get('[data-drupal-selector="edit-field-paragraphs-1"] .paragraphs-icon-changed').should('be.visible');
+        cy.get('[data-drupal-selector="edit-field-paragraphs-0-subform"] .cke_button__bulletedlist').wait(1000).click();
+        cy.get('[name="field_paragraphs_0_collapse"]').click();
+        cy.get('[data-drupal-selector="edit-field-paragraphs-0"] .paragraphs-icon-changed').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
             cy.get('.ajax-new-content').should('be.visible').should('have.css', 'opacity').and('equals', '1');
             cy.compareSnapshot({ fullPage: true });
