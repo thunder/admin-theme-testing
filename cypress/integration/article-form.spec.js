@@ -118,9 +118,8 @@ describe(theme, () => {
         cy.get('[name="field_paragraphs_1_collapse"]').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-1"] .paragraphs-icon-changed').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
-            cy.get('.ajax-new-content').invoke('removeAttr', 'style').then(() => {
-                cy.compareSnapshot({ fullPage: true });
-            });
+            cy.get('.ajax-new-content').should('be.visible').should('have.css', 'opacity').and('equals', '1');
+            cy.compareSnapshot({ fullPage: true });
         });
     });
 
