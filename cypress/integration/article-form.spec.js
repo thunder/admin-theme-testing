@@ -96,10 +96,12 @@ describe(theme, () => {
         cy.get('[data-drupal-selector="edit-field-paragraphs"] .field-multiple-table > tbody > tr:last-of-type .paragraphs-features__add-in-between__button').contains('+ Text').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-0-subform"]').should('be.visible');
         cy.get('iframe.cke_wysiwyg_frame').click();
-        cy.get('.cke_button__drupallink').click();
+        // @todo https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.get('.cke_button__drupallink').wait(1000).click();
         cy.get('[data-drupal-selector="edit-attributes-href"]').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
-            cy.compareSnapshot({ disableTimersAndAnimations: true });
+            cy.compareSnapshot();
         });
     });
 
@@ -112,12 +114,12 @@ describe(theme, () => {
         cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"]').should('be.visible');
         // @todo https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
         // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"] .cke_button__bulletedlist').wait(200).click();
+        cy.get('[data-drupal-selector="edit-field-paragraphs-1-subform"] .cke_button__bulletedlist').wait(1000).click();
         cy.get('[name="field_paragraphs_1_collapse"]').click();
         cy.get('[data-drupal-selector="edit-field-paragraphs-1"] .paragraphs-icon-changed').should('be.visible');
         cy.get('#edit-author summary span').invoke('html', 'Authored on 2022-01-01').then(() => {
             // eslint-disable-next-line cypress/no-unnecessary-waiting
-            cy.compareSnapshot({ disableTimersAndAnimations: true, fullPage: true });
+            cy.compareSnapshot({ fullPage: true });
         });
     });
 
