@@ -58,7 +58,7 @@ Cypress.Commands.add('compareSnapshot', (maybeName, maybeOptions) => {
                 capture: 'fullPage',
                 ...options
             };
-        };
+        }
     }
 
     cy.sanitizeTitle(snapshotTitle).then((title) => {

@@ -53,3 +53,13 @@ jobs:
         with:
           name: images-${{matrix.browser}}
           path: cypress/snapshots
+
+      - name: Update reference images
+        if: github.event_name == 'pull_request' && contains(steps.message.outputs.message, '[UPDATE_SCREENSHOTS')
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated reference images for ${{matrix.browser}}
+          file_pattern: cypress/snapshots/**
+          commit_user_name: ThunderTechAccount
+          commit_user_email: technology@thunder.org
+
