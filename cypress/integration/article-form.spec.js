@@ -24,7 +24,6 @@ describe(theme, () => {
         cy.compareSnapshot({ fullPage: true });
     });
 
-
     it('Files overview', () => {
         cy.visit('/admin/content/files');
         cy.get('#view-filename-table-column a').click();
