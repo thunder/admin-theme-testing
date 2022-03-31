@@ -23,6 +23,7 @@ describe(theme, () => {
         cy.visit('/admin/content/scheduled');
         cy.compareSnapshot({ fullPage: true });
     });
+
     it('Files overview', () => {
         cy.visit('/admin/content/files');
         cy.get('#view-filename-table-column a').click();
